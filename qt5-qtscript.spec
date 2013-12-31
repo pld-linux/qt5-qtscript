@@ -14,6 +14,8 @@ URL:		http://qt-project.org/
 BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	qt5-qttools-devel = %{version}
 BuildRequires:	rpmbuild(macros) >= 1.654
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
@@ -36,6 +38,9 @@ Qt5 Script - development files.
 %package doc
 Summary:	The Qt5 Script - docs
 Group:		Documentation
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description doc
 Qt5 Script - documentation.
@@ -43,6 +48,9 @@ Qt5 Script - documentation.
 %package examples
 Summary:	Qt5 Script examples
 Group:		X11/Development/Libraries
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description examples
 Qt5 Script - examples.
