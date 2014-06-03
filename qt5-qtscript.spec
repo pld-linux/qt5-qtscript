@@ -1,18 +1,19 @@
 # TODO:
+# - more BRs
 # - cleanup
 
 %define		orgname		qtscript
 Summary:	The Qt5 Script
 Name:		qt5-%{orgname}
-Version:	5.2.0
-Release:	0.1
+Version:	5.3.0
+Release:	0.2
 License:	LGPL v2.1 or GPL v3.0
 Group:		X11/Libraries
-Source0:	http://download.qt-project.org/official_releases/qt/5.2/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
-# Source0-md5:	37d32c983c3fdf5b29f932265046f2e3
+Source0:	http://download.qt-project.org/official_releases/qt/5.3/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
+# Source0-md5:	4f755c8810946246adcfbaa74fafae62
 URL:		http://qt-project.org/
-BuildRequires:	qt5-qtbase-devel = %{version}
-BuildRequires:	qt5-qttools-devel = %{version}
+BuildRequires:	Qt5Core-devel = %{version}
+BuildRequires:	qt5-assistant = %{version}
 BuildRequires:	rpmbuild(macros) >= 1.654
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -27,12 +28,19 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Qt5 Script libraries.
 
-%package devel
+%package -n Qt5Script
+Summary:	The Qt5 Script
+Group:		X11/Libraries
+
+%description -n Qt5Script
+Qt5 Script libraries.
+
+%package -n Qt5Script-devel
 Summary:	The Qt5 Script - development files
 Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	Qt5Script = %{version}-%{release}
 
-%description devel
+%description -n Qt5Script-devel
 Qt5 Script - development files.
 
 %package doc
@@ -99,17 +107,17 @@ done
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post		-p /sbin/ldconfig
-%postun		-p /sbin/ldconfig
+%post -n Qt5Script	-p /sbin/ldconfig
+%postun -n Qt5Script	-p /sbin/ldconfig
 
-%files
+%files -n Qt5Script
 %defattr(644,root,root,755)
 %attr(755,root,root) %ghost %{_libdir}/libQt5Script.so.?
 %attr(755,root,root) %{_libdir}/libQt5Script.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libQt5ScriptTools.so.?
 %attr(755,root,root) %{_libdir}/libQt5ScriptTools.so.*.*
 
-%files devel
+%files -n Qt5Script-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libQt5Script.so
 %attr(755,root,root) %{_libdir}/libQt5ScriptTools.so
