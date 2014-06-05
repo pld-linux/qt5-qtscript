@@ -48,38 +48,65 @@ systemach biurkowych, przenośnych i wbudowanych bez przepisywania kodu
 Ten pakiet zawiera biblioteki Qt5 Script.
 
 %package -n Qt5Script
-Summary:	The Qt5 Script libraries
-Summary(pl.UTF-8):	Biblioteki Qt5 Script
+Summary:	The Qt5 Script library
+Summary(pl.UTF-8):	Biblioteka Qt5 Script
 Group:		Libraries
 Requires:	Qt5Core >= %{qtbase_ver}
-Requires:	Qt5Gui >= %{qtbase_ver}
-Requires:	Qt5Widgets >= %{qtbase_ver}
 Obsoletes:	qt5-qtscript
 
 %description -n Qt5Script
-Qt5 Script libraries provide classes for making Qt 5 applications
+Qt5 Script library provides classes for making Qt 5 applications
 scriptable.
 
 %description -n Qt5Script -l pl.UTF_8
-Biblioteki Qt5 Script dostarczają klasy pozwalające na oskryptowanie
+Biblioteka Qt5 Script dostarcza klasy pozwalające na oskryptowanie
 aplikacji Qt 5.
 
 %package -n Qt5Script-devel
-Summary:	Qt5 Script libraries - development files
-Summary(pl.UTF-8):	Biblioteki Qt5 Script - pliki programistyczne
+Summary:	Qt5 Script library - development files
+Summary(pl.UTF-8):	Biblioteka Qt5 Script - pliki programistyczne
 Group:		Development/Libraries
-Requires:	OpenGL-devel
 Requires:	Qt5Core-devel >= %{qtbase_ver}
-Requires:	Qt5Gui-devel >= %{qtbase_ver}
 Requires:	Qt5Script = %{version}-%{release}
-Requires:	Qt5Widgets-devel >= %{qtbase_ver}
 Obsoletes:	qt5-qtscript-devel
 
 %description -n Qt5Script-devel
-Qt5 Script libraries - development files.
+Qt5 Script library - development files.
 
 %description -n Qt5Script-devel -l pl.UTF-8
-Biblioteki Qt5 Script - pliki programistyczne.
+Biblioteka Qt5 Script - pliki programistyczne.
+
+%package -n Qt5ScriptTools
+Summary:	The Qt5 ScriptTools libraries
+Summary(pl.UTF-8):	Biblioteki Qt5 ScriptTools
+Group:		Libraries
+Requires:	Qt5Gui >= %{qtbase_ver}
+Requires:	Qt5Script = %{version}-%{release}
+Requires:	Qt5Widgets >= %{qtbase_ver}
+
+%description -n Qt5ScriptTools
+Qt5 ScriptTools library provides additional components for
+applications that use Qt5 Script.
+
+%description -n Qt5ScriptTools -l pl.UTF_8
+Biblioteki Qt5 ScriptTools dostarczaja dodatkowe komponenty dla
+aplikacji wykorzystujących bibliotekę Qt5 Script.
+
+%package -n Qt5ScriptTools-devel
+Summary:	Qt5 ScriptTools library - development files
+Summary(pl.UTF-8):	Biblioteka Qt5 ScriptTools - pliki programistyczne
+Group:		Development/Libraries
+Requires:	OpenGL-devel
+Requires:	Qt5Gui-devel >= %{qtbase_ver}
+Requires:	Qt5Script-devel = %{version}-%{release}
+Requires:	Qt5ScriptTools = %{version}-%{release}
+Requires:	Qt5Widgets-devel >= %{qtbase_ver}
+
+%description -n Qt5ScriptTools-devel
+Qt5 ScriptTools library - development files.
+
+%description -n Qt5ScriptTools-devel -l pl.UTF-8
+Biblioteka Qt5 ScriptTools - pliki programistyczne.
 
 %package doc
 Summary:	Qt5 Script documentation in HTML format
@@ -182,28 +209,37 @@ rm -rf $RPM_BUILD_ROOT
 %post	-n Qt5Script -p /sbin/ldconfig
 %postun	-n Qt5Script -p /sbin/ldconfig
 
+%post	-n Qt5ScriptTools -p /sbin/ldconfig
+%postun	-n Qt5ScriptTools -p /sbin/ldconfig
+
 %files -n Qt5Script
 %defattr(644,root,root,755)
 %doc LGPL_EXCEPTION.txt dist/changes-*
 %attr(755,root,root) %{_libdir}/libQt5Script.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libQt5Script.so.5
-%attr(755,root,root) %{_libdir}/libQt5ScriptTools.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libQt5ScriptTools.so.5
 
 %files -n Qt5Script-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libQt5Script.so
-%attr(755,root,root) %{_libdir}/libQt5ScriptTools.so
 %{_libdir}/libQt5Script.prl
-%{_libdir}/libQt5ScriptTools.prl
 %{_includedir}/qt5/QtScript
-%{_includedir}/qt5/QtScriptTools
 %{_pkgconfigdir}/Qt5Script.pc
-%{_pkgconfigdir}/Qt5ScriptTools.pc
 %{_libdir}/cmake/Qt5Script
-%{_libdir}/cmake/Qt5ScriptTools
 %{qt5dir}/mkspecs/modules/qt_lib_script.pri
 %{qt5dir}/mkspecs/modules/qt_lib_script_private.pri
+
+%files -n Qt5ScriptTools
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libQt5ScriptTools.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libQt5ScriptTools.so.5
+
+%files -n Qt5ScriptTools-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libQt5ScriptTools.so
+%{_libdir}/libQt5ScriptTools.prl
+%{_includedir}/qt5/QtScriptTools
+%{_pkgconfigdir}/Qt5ScriptTools.pc
+%{_libdir}/cmake/Qt5ScriptTools
 %{qt5dir}/mkspecs/modules/qt_lib_scripttools.pri
 %{qt5dir}/mkspecs/modules/qt_lib_scripttools_private.pri
 
