@@ -184,7 +184,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n Qt5Script
 %defattr(644,root,root,755)
-%doc LGLP_EXCEPTION.txt dist/changes-*
+%doc LGPL_EXCEPTION.txt dist/changes-*
 %attr(755,root,root) %{_libdir}/libQt5Script.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libQt5Script.so.5
 %attr(755,root,root) %{_libdir}/libQt5ScriptTools.so.*.*.*
