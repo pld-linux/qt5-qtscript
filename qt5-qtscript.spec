@@ -58,7 +58,7 @@ Obsoletes:	qt5-qtscript
 Qt5 Script library provides classes for making Qt 5 applications
 scriptable.
 
-%description -n Qt5Script -l pl.UTF_8
+%description -n Qt5Script -l pl.UTF-8
 Biblioteka Qt5 Script dostarcza klasy pozwalające na oskryptowanie
 aplikacji Qt 5.
 
@@ -88,7 +88,7 @@ Requires:	Qt5Widgets >= %{qtbase_ver}
 Qt5 ScriptTools library provides additional components for
 applications that use Qt5 Script.
 
-%description -n Qt5ScriptTools -l pl.UTF_8
+%description -n Qt5ScriptTools -l pl.UTF-8
 Biblioteki Qt5 ScriptTools dostarczaja dodatkowe komponenty dla
 aplikacji wykorzystujących bibliotekę Qt5 Script.
 
