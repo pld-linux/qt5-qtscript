@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	qch	# documentation in QCH format
+%bcond_without	qm	# QM translations
 
 %define		orgname		qtscript
 %define		qtbase_ver	%{version}
@@ -8,12 +9,14 @@
 Summary:	The Qt5 Script libraries
 Summary(pl.UTF-8):	Biblioteki Qt5 Script
 Name:		qt5-%{orgname}
-Version:	5.3.0
+Version:	5.3.1
 Release:	1
 License:	LGPL v2.1 with Digia Qt LGPL Exception v1.1 or GPL v3.0
 Group:		Libraries
 Source0:	http://download.qt-project.org/official_releases/qt/5.3/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
-# Source0-md5:	4f755c8810946246adcfbaa74fafae62
+# Source0-md5:	262c142aac926b492a1bf7fa3f9a96c2
+Source1:	http://download.qt-project.org/official_releases/qt/5.3/%{version}/submodules/qttranslations-opensource-src-%{version}.tar.xz
+# Source1-md5:	d43878fc7a5b9fdee03039770dbac1fa
 URL:		http://qt-project.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
@@ -23,6 +26,7 @@ BuildRequires:	Qt5Widgets-devel >= %{qtbase_ver}
 BuildRequires:	qt5-assistant >= %{qttools_ver}
 %endif
 BuildRequires:	qt5-build >= %{qtbase_ver}
+%{?with_qm:BuildRequires:	qt5-linguist >= %{qttools_ver}}
 BuildRequires:	qt5-qmake >= %{qtbase_ver}
 BuildRequires:	rpmbuild(macros) >= 1.654
 BuildRequires:	tar >= 1:1.22
@@ -153,12 +157,19 @@ Qt5 Script examples.
 Przykłady do bibliotek Qt5 Script.
 
 %prep
-%setup -q -n %{orgname}-opensource-src-%{version}
+%setup -q -n %{orgname}-opensource-src-%{version} %{?with_qm:-a1}
 
 %build
 qmake-qt5
 %{__make}
 %{__make} %{!?with_qch:html_}docs
+
+%if %{with qm}
+cd qttranslations-opensource-src-%{version}
+qmake-qt5
+%{__make}
+cd ..
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -167,6 +178,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install_%{!?with_qch:html_}docs \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
+
+%if %{with qm}
+%{__make} -C qttranslations-opensource-src-%{version} install \
+	INSTALL_ROOT=$RPM_BUILD_ROOT
+# keep only qtscript
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/qt5/translations/{assistant,designer,linguist,qmlviewer,qt,qtbase,qtconfig,qtconnectivity,qtdeclarative,qtlocation,qtmultimedia,qtquick1,qtxmlpatterns}_*.qm
+%endif
 
 # kill unnecessary -L%{_libdir} from *.la, *.prl, *.pc
 %{__sed} -i -e "s,-L%{_libdir} \?,,g" \
@@ -203,6 +221,20 @@ ifecho_tree() {
 echo "%defattr(644,root,root,755)" > examples.files
 ifecho_tree examples %{_examplesdir}/qt5/script
 
+# find_lang --with-qm supports only PLD qt3/qt4 specific %{_datadir}/locale/*/LC_MESSAGES layout
+find_qt5_qm()
+{
+	name="$1"
+	find $RPM_BUILD_ROOT%{_datadir}/qt5/translations -name "${name}_*.qm" | \
+		sed -e "s:^$RPM_BUILD_ROOT::" \
+		    -e 's:\(.*/'$name'_\)\([a-z][a-z][a-z]\?\)\(_[A-Z][A-Z]\)\?\(\.qm\)$:%lang(\2\3) \1\2\3\4:'
+}
+
+echo '%defattr(644,root,root,755)' > qtscript.lang
+%if %{with qm}
+find_qt5_qm qtscript >> qtscript.lang
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -212,7 +244,7 @@ rm -rf $RPM_BUILD_ROOT
 %post	-n Qt5ScriptTools -p /sbin/ldconfig
 %postun	-n Qt5ScriptTools -p /sbin/ldconfig
 
-%files -n Qt5Script
+%files -n Qt5Script -f qtscript.lang
 %defattr(644,root,root,755)
 %doc LGPL_EXCEPTION.txt dist/changes-*
 %attr(755,root,root) %{_libdir}/libQt5Script.so.*.*.*
