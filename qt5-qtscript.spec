@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	examples	# examples packaging
-%bcond_without	qch		# documentation in QCH format
+%bcond_without	doc		# Documentation
 %bcond_without	qm		# QM translations
 
 %define		orgname		qtscript
@@ -26,7 +26,7 @@ BuildRequires:	Qt5Widgets-devel >= %{qtbase_ver}
 %if %{with examples}
 BuildRequires:	Qt5UiTools-devel >= %{qttools_ver}
 %endif
-%if %{with qch}
+%if %{with doc}
 BuildRequires:	qt5-assistant >= %{qttools_ver}
 %endif
 BuildRequires:	qt5-build >= %{qtbase_ver}
@@ -166,7 +166,7 @@ Przykłady do bibliotek Qt5 Script.
 %build
 qmake-qt5
 %{__make}
-%{__make} %{!?with_qch:html_}docs
+%{?with_doc:%{__make} doc}s
 
 %if %{with qm}
 cd qttranslations-opensource-src-%{version}
@@ -180,8 +180,10 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
-%{__make} install_%{!?with_qch:html_}docs \
+%if %{with doc}
+%{__make} install_docs \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
+%endif
 
 %if %{with qm}
 %{__make} -C qttranslations-opensource-src-%{version} install \
@@ -279,12 +281,12 @@ rm -rf $RPM_BUILD_ROOT
 %{qt5dir}/mkspecs/modules/qt_lib_scripttools.pri
 %{qt5dir}/mkspecs/modules/qt_lib_scripttools_private.pri
 
+%if %{with doc}
 %files doc
 %defattr(644,root,root,755)
 %{_docdir}/qt5-doc/qtscript
 %{_docdir}/qt5-doc/qtscripttools
 
-%if %{with qch}
 %files doc-qch
 %defattr(644,root,root,755)
 %{_docdir}/qt5-doc/qtscript.qch
