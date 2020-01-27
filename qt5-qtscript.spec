@@ -10,14 +10,14 @@
 Summary:	The Qt5 Script libraries
 Summary(pl.UTF-8):	Biblioteki Qt5 Script
 Name:		qt5-%{orgname}
-Version:	5.14.0
+Version:	5.14.1
 Release:	1
 License:	LGPL v2.1 with Digia Qt LGPL Exception v1.1 or GPL v3.0
 Group:		Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.14/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
-# Source0-md5:	48949b623b265f2ba55f061617f27e46
+# Source0-md5:	37a5b232f8c319c330f5882c0b8d5142
 Source1:	http://download.qt.io/official_releases/qt/5.14/%{version}/submodules/qttranslations-everywhere-src-%{version}.tar.xz
-# Source1-md5:	74ff09655d412069a7b4210fea5440fb
+# Source1-md5:	ef18bbad424173c3211c2ce0f4074485
 URL:		http://www.qt.io/
 BuildRequires:	OpenGL-devel
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
