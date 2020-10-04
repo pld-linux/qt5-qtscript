@@ -166,7 +166,7 @@ Przykłady do bibliotek Qt5 Script.
 %build
 qmake-qt5
 %{__make}
-%{?with_doc:%{__make} doc}s
+%{?with_doc:%{__make} docs}
 
 %if %{with qm}
 cd qttranslations-everywhere-src-%{version}
