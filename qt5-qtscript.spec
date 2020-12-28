@@ -59,7 +59,7 @@ Summary:	The Qt5 Script library
 Summary(pl.UTF-8):	Biblioteka Qt5 Script
 Group:		Libraries
 Requires:	Qt5Core >= %{qtbase_ver}
-Obsoletes:	qt5-qtscript
+Obsoletes:	qt5-qtscript < 5.3.0
 
 %description -n Qt5Script
 Qt5 Script library provides classes for making Qt 5 applications
@@ -75,7 +75,7 @@ Summary(pl.UTF-8):	Biblioteka Qt5 Script - pliki programistyczne
 Group:		Development/Libraries
 Requires:	Qt5Core-devel >= %{qtbase_ver}
 Requires:	Qt5Script = %{version}-%{release}
-Obsoletes:	qt5-qtscript-devel
+Obsoletes:	qt5-qtscript-devel < 5.3.0
 
 %description -n Qt5Script-devel
 Qt5 Script library - development files.
