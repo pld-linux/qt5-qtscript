@@ -12,14 +12,13 @@ Summary(pl.UTF-8):	Biblioteki Qt5 Script
 Name:		qt5-%{orgname}
 Version:	5.15.2
 Release:	2
-License:	LGPL v2.1 with Digia Qt LGPL Exception v1.1 or GPL v3.0
+License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
 # Source0-md5:	039578466ba1921b8dad868ea9ce3b0d
 Source1:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/qttranslations-everywhere-src-%{version}.tar.xz
 # Source1-md5:	9b66cdb64402e8fd9e843f8a7120abb1
-URL:		http://www.qt.io/
-BuildRequires:	OpenGL-devel
+URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Widgets-devel >= %{qtbase_ver}
@@ -32,7 +31,7 @@ BuildRequires:	qt5-assistant >= %{qttools_ver}
 BuildRequires:	qt5-build >= %{qtbase_ver}
 %{?with_qm:BuildRequires:	qt5-linguist >= %{qttools_ver}}
 BuildRequires:	qt5-qmake >= %{qtbase_ver}
-BuildRequires:	rpmbuild(macros) >= 1.654
+BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -104,11 +103,8 @@ aplikacji wykorzystujących bibliotekę Qt5 Script.
 Summary:	Qt5 ScriptTools library - development files
 Summary(pl.UTF-8):	Biblioteka Qt5 ScriptTools - pliki programistyczne
 Group:		Development/Libraries
-Requires:	OpenGL-devel
-Requires:	Qt5Gui-devel >= %{qtbase_ver}
 Requires:	Qt5Script-devel = %{version}-%{release}
 Requires:	Qt5ScriptTools = %{version}-%{release}
-Requires:	Qt5Widgets-devel >= %{qtbase_ver}
 
 %description -n Qt5ScriptTools-devel
 Qt5 ScriptTools library - development files.
@@ -121,9 +117,7 @@ Summary:	Qt5 Script documentation in HTML format
 Summary(pl.UTF-8):	Dokumentacja do bibliotek Qt5 Script w formacie HTML
 Group:		Documentation
 Requires:	qt5-doc-common >= %{qtbase_ver}
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description doc
 Qt5 Script documentation in HTML format.
@@ -136,9 +130,7 @@ Summary:	Qt5 Script documentation in QCH format
 Summary(pl.UTF-8):	Dokumentacja do bibliotek Qt5 Script w formacie QCH
 Group:		Documentation
 Requires:	qt5-doc-common >= %{qtbase_ver}
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description doc-qch
 Qt5 Script documentation in QCH format.
@@ -150,9 +142,7 @@ Dokumentacja do bibliotek Qt5 Script w formacie QCH.
 Summary:	Qt5 Script examples
 Summary(pl.UTF-8):	Przykłady do bibliotek Qt5 Script
 Group:		X11/Development/Libraries
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description examples
 Qt5 Script examples.
@@ -177,6 +167,7 @@ cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
