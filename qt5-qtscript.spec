@@ -59,7 +59,7 @@ Ten pakiet zawiera biblioteki Qt5 Script.
 Summary:	The Qt5 Script library
 Summary(pl.UTF-8):	Biblioteka Qt5 Script
 Group:		Libraries
-Requires:	Qt5Core >= %{qtbase_ver}
+%requires_eq_to	Qt5Core Qt5Core-devel
 Obsoletes:	qt5-qtscript < 5.3.0
 
 %description -n Qt5Script
